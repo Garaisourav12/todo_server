@@ -20,12 +20,12 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Description : Registers a new user.
 * Request Body Structure:
 
-    {
-        "name": "string",
-        "email": "string",
-        "username": "string",
-        "password": "string"
-    }
+        {
+            "name": "string",
+            "email": "string",
+            "username": "string",
+            "password": "string"
+        }
 
 ### 3. User Login :
 * Endpoint : /login
@@ -33,10 +33,10 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Description : Logs in an existing user.
 * Request Body Structure :
 
-    {
-        "loginId": "string",
-        "password": "string"
-    }
+        {
+            "loginId": "string",
+            "password": "string"
+        }
 
 ### 4. User Logout :
 * Endpoint : /logout
@@ -79,9 +79,9 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Request Parameters : id (todo ID)
 * Request Body Structure :
 
-    {
-        "title": "string"
-    }
+        {
+            "title": "string"
+        }
 
 ### 10. Complete Todo :
 * Endpoint : /complete/:id
