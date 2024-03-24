@@ -12,7 +12,6 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Endpoint : /
 * Method : GET
 * Description: Displays a welcome message for the To-Do server.
-* Request Body : N/A
 
 ### 2. User Registration :
 * Endpoint : /register
@@ -42,19 +41,16 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Endpoint : /logout
 * Method : GET
 * Description : Logs out the current user.
-* Request Body : N/A
 
 ### 5. Logout From All Devices :
 * Endpoint : /logout_all
 * Method : GET
 * Description : Logs out the current user from all devices.
-* Request Body : N/A
 
 ### 6. Get Todos :
 * Endpoint : /todos
 * Method : GET
 * Description : Retrieves all todos for the logged-in user.
-* Request Body : N/A
 
 ### 7. Add Todo :
 * Endpoint : /add
@@ -79,18 +75,15 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Request Parameters : id (todo ID)
 * Request Body Structure :
 
-
         {
             "title": "string"
         }
-        
 
 ### 10. Complete Todo :
 * Endpoint : /complete/:id
 * Method : PUT
 * Description : Marks a todo as completed by ID for the logged-in user.
 * Request Parameters : id (todo ID)
-* Request Body : N/A
 
 
 Feel free to explore these endpoints and start building your To-Do application! 📝🚀
