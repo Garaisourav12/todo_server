@@ -19,6 +19,7 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Method : POST
 * Description : Registers a new user.
 * Request Body Structure:
+
     {
         "name": "string",
         "email": "string",
@@ -31,6 +32,7 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Method : POST
 * Description : Logs in an existing user.
 * Request Body Structure :
+
     {
         "loginId": "string",
         "password": "string"
@@ -59,6 +61,7 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Method : POST
 * Description : Adds a new todo for the logged-in user.
 * Request Body Structure :
+
     {
         "title": "string"
     }
@@ -75,6 +78,7 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Description: Edits a todo by ID for the logged-in user.
 * Request Parameters : id (todo ID)
 * Request Body Structure :
+
     {
         "title": "string"
     }
