@@ -62,9 +62,9 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Description : Adds a new todo for the logged-in user.
 * Request Body Structure :
 
-    ```{
-        "title": "string"
-    }```
+        {
+            "title": "string"
+        }
 
 ### 8. Delete Todo :
 * Endpoint : /delete/:id
