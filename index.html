@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do Server API Documentation</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        h1, h2, h3 {
+            color: #333;
+            margin: 20px 0 10px;
+        }
+        ul{
+            margin-left: 50px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        pre {
+            background-color: #d7d6d6;
+            padding: 30px 10px;
+            border-radius: 5px;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>To-Do Server API Documentation</h1>
+    </center>
+    
+    <h2>Base URL:</h2>
+    <p>The base URL for all API endpoints is <a href="https://todo-server-wine.vercel.app/">https://todo-server-wine.vercel.app/</a></p>
+    
+    <h2>Endpoints:</h2>
+    <h3>Home Route:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /</li>
+        <li><strong>Method:</strong> GET</li>
+        <li><strong>Description:</strong> Displays a welcome message for the To-Do server.</li>
+    </ul>
+
+    <h3>User Registration:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /register</li>
+        <li><strong>Method:</strong> POST</li>
+        <li><strong>Description:</strong> Registers a new user.</li>
+        <li><strong>Request Body Structure:</strong></li>
+    </ul>
+    <pre>
+    {
+        "name": "string",
+        "email": "string",
+        "username": "string",
+        "password": "string"
+    }</pre>
+
+    <h3>User Login:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /login</li>
+        <li><strong>Method:</strong> POST</li>
+        <li><strong>Description:</strong> Logs in an existing user.</li>
+        <li><strong>Request Body Structure:</strong></li>
+    </ul>
+    <pre>
+    {
+        "loginId": "string",
+        "password": "string"
+    }</pre>
+
+    <h3>User Logout:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /logout</li>
+        <li><strong>Method:</strong> GET</li>
+        <li><strong>Description:</strong> Logs out the current user.</li>
+    </ul>
+
+    <h3>Logout From All Devices:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /logout_all</li>
+        <li><strong>Method:</strong> GET</li>
+        <li><strong>Description:</strong> Logs out the current user from all devices.</li>
+    </ul>
+
+    <h3>Get Todos:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /todos</li>
+        <li><strong>Method:</strong> GET</li>
+        <li><strong>Description:</strong> Retrieves all todos for the logged-in user.</li>
+    </ul>
+
+    <h3>Add Todo:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /add</li>
+        <li><strong>Method:</strong> POST</li>
+        <li><strong>Description:</strong> Adds a new todo for the logged-in user.</li>
+        <li><strong>Request Body Structure:</strong></li>
+    </ul>
+    <pre>
+    {
+        "title": "string"
+    }</pre>
+
+    <h3>Delete Todo:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /delete/:id</li>
+        <li><strong>Method:</strong> DELETE</li>
+        <li><strong>Description:</strong> Deletes a todo by ID for the logged-in user.</li>
+        <li><strong>Request Parameters:</strong> id (todo ID)</li>
+    </ul>
+
+    <h3>Edit Todo:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /edit/:id</li>
+        <li><strong>Method:</strong> PUT</li>
+        <li><strong>Description:</strong> Edits a todo by ID for the logged-in user.</li>
+        <li><strong>Request Parameters:</strong> id (todo ID)</li>
+        <li><strong>Request Body Structure:</strong></li>
+    </ul>
+    <pre>
+    {
+        "title": "string"
+    }</pre>
+
+    <h3>Complete Todo:</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> /complete/:id</li>
+        <li><strong>Method:</strong> PUT</li>
+        <li><strong>Description:</strong> Marks a todo as completed by ID for the logged-in user.</li>
+        <li><strong>Request Parameters:</strong> id (todo ID)</li>
+    </ul>
+    
+    <br>
+    <p>Feel free to explore these endpoints and start building your To-Do application! 📝🚀</p>
+    <br>
+    <p>Please note that this Documentation is a template, and you should customize it further based on your specific project requirements. If you have any questions or need further assistance, feel free to reach out! 😊</p>
+</body>
+</html>
