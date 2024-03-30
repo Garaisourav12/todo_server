@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
     
     // Send the HTML content as response
     return res.send(htmlContent);
+    // return res.send('Welsome to The To-Do Server');
 });
 
 module.exports = router;
