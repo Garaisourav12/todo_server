@@ -25,3 +25,20 @@ module.exports.cleanupAndValidate = ({ name, email, username, password }) => {
         resolve();
     })
 }
+
+
+module.exports.loginDataValidator = ({ loginId, password }) => {
+    return new Promise((resolve, reject) => {
+        if (!loginId || !password)
+            reject("Missing credentials");
+
+        if (typeof loginId !== "string") reject("Datatype of login id is wrong");
+        if (typeof password !== "string") reject("Datatype of password is wrong");
+
+        if (!(6 <= password.length || password.length <= 20))
+            reject("password length should be 6-20");
+
+        // If all are validate
+        resolve();
+    })
+}

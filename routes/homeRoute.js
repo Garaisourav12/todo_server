@@ -1,8 +1,8 @@
-const router = require('express').Router();
+const homeRouter = require('express').Router();
 const fs = require('fs');
 
 // Home route
-router.get('/', (req, res) => {
+homeRouter.get('/', (req, res) => {
     // Read index.html file synchronously
     const htmlContent = fs.readFileSync('index.html', 'utf8');
     
@@ -11,4 +11,4 @@ router.get('/', (req, res) => {
     // return res.send('Welsome to The To-Do Server');
 });
 
-module.exports = router;
+module.exports = homeRouter;

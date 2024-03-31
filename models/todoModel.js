@@ -4,16 +4,16 @@ const Schema = mongoose.Schema;
 const todoSchema = new Schema({
     title: {
         type: String,
-        require: true,
+        require: true
     },
     isCompleted: {
         type: Boolean,
-        require: true,
+        require: true
     },
     userId: {
         type: String,
-        require: true,
-    },
+        require: true
+    }
 });
 
 module.exports = mongoose.model("todo", todoSchema);

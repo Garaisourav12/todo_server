@@ -14,7 +14,7 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
 * Description: Displays a welcome message for the To-Do server.
 
 ### 2. User Registration :
-* Endpoint : /register
+* Endpoint : /user/register
 * Method : POST
 * Description : Registers a new user.
 * Request Body Structure:
@@ -27,7 +27,7 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
         }
 
 ### 3. User Login :
-* Endpoint : /login
+* Endpoint : /user/login
 * Method : POST
 * Description : Logs in an existing user.
 * Request Body Structure :
@@ -38,22 +38,35 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
         }
 
 ### 4. User Logout :
-* Endpoint : /logout
+* Endpoint : /user/logout
 * Method : GET
 * Description : Logs out the current user.
 
 ### 5. Logout From All Devices :
-* Endpoint : /logout_all
+* Endpoint : /user/logout_all
 * Method : GET
 * Description : Logs out the current user from all devices.
 
 ### 6. Get Todos :
-* Endpoint : /todos
+* Endpoint : /todo/my-todos
 * Method : GET
-* Description : Retrieves all todos for the logged-in user.
+* Description : Retrieves all todos of the logged-in user.
+* Query Parameters : page (Page No.), max (Data Per Page)
+
+### 6. Get Running Todos :
+* Endpoint : /todo/my-running-todos
+* Method : GET
+* Description : Retrieves all running todos of the logged-in user.
+* Query Parameters : page (Page No.), max (Data Per Page)
+
+### 6. Get Completed Todos :
+* Endpoint : /todo/my-completed-todos
+* Method : GET
+* Description : Retrieves all completed todos of the logged-in user.
+* Query Parameters : page (Page No.), max (Data Per Page)
 
 ### 7. Add Todo :
-* Endpoint : /add
+* Endpoint : /todo/add
 * Method : POST
 * Description : Adds a new todo for the logged-in user.
 * Request Body Structure :
@@ -63,16 +76,22 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
         }
 
 ### 8. Delete Todo :
-* Endpoint : /delete/:id
+* Endpoint : /todo/delete
 * Method : DELETE
-* Description : Deletes a todo by ID for the logged-in user.
-* Request Parameters : id (todo ID)
+* Description : Deletes a todo by todoID of the logged-in user.
+* Query Parameters : id (todo ID)
+
+### 8. Delete All Completed Todos :
+* Endpoint : /todo/delete-all-completed
+* Method : DELETE
+* Description : Deletes all completed todos of the logged-in user.
+* Query Parameters : id (todo ID)
 
 ### 9. Edit Todo :
-* Endpoint : /edit/:id
+* Endpoint : /todo/edit
 * Method : PUT
-* Description: Edits a todo by ID for the logged-in user.
-* Request Parameters : id (todo ID)
+* Description: Edits a todo by ID of the logged-in user.
+* Query Parameters : id (todo ID)
 * Request Body Structure :
 
         {
@@ -80,10 +99,10 @@ The base URL for all API endpoints is https://todo-server-wine.vercel.app/
         }
 
 ### 10. Complete Todo :
-* Endpoint : /complete/:id
+* Endpoint : /todo/complete
 * Method : PUT
-* Description : Marks a todo as completed by ID for the logged-in user.
-* Request Parameters : id (todo ID)
+* Description : Marks a todo as completed by ID of the logged-in user.
+* Query Parameters : id (todo ID)
 
 
 Feel free to explore these endpoints and start building your To-Do application! 📝🚀

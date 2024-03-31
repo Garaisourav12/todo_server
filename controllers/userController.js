@@ -1,51 +1,33 @@
-const mongoose = require('mongoose');
-const validator = require("validator");
+const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
-
-const { cleanupAndValidate } = require('../utils/authUtils')
-const userModel = require("../models/userModel");
+const { cleanupAndValidate, loginDataValidator } = require("../utils/authUtils");
+const User = require("../entities/User");
 
 // Controller function to register
 module.exports.register = async (req, res) => {
     // Destructure the credentials from the request body
     const { name, email, username, password } = req.body;
 
+    // Validate credentials
     try {
-        // Validate credentials
         await cleanupAndValidate({ name, email, username, password });
-
-        // Check if email already exists
-        const userEmailExists = await userModel.findOne({ email });
-        if (userEmailExists) {
-            return res.status(400).json({
-                status: 400,
-                message: "Email already exists. Please choose a different email.",
-            });
-        }
-
-        // Check if username already exists
-        const userUsernameExists = await userModel.findOne({ username });
-        if (userUsernameExists) {
-            return res.status(400).json({
-                status: 400,
-                message: "Username already exists. Please choose a different username.",
-            });
-        }
-
-        // Encrypt password
-        const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALT));
-
-        // Create user object
-        const userObj = new userModel({
-            name,
-            email,
-            username,
-            password: hashedPassword,
+    } catch (error) {
+        return res.status(400).json({
+            status: 400,
+            message: error,
         });
+    }
 
-        // Save user in the database
-        const userDoc = await userObj.save();
-        
+    try {
+        // Check the email or user is already esist or not
+        await User.isExist({ email, username });
+
+        // Creat new user instance
+        const user = new User({ name, email, username, password });
+
+        // Register the new user
+        const userDoc = await user.register();
+
         // Return successful registration response
         return res.status(201).json({
             status: 201,
@@ -59,13 +41,9 @@ module.exports.register = async (req, res) => {
         });
     } catch (error) {
         // Return an internal server error response
-        return res.status(500).json({
-            status: 500,
-            message: "Internal server error. Please try again later.",
-            error: error
-        });
+        return res.status(error.status).json(error);
     }
-}
+};
 
 // Controller function to login
 module.exports.login = async (req, res) => {
@@ -73,28 +51,24 @@ module.exports.login = async (req, res) => {
     const { loginId, password } = req.body;
 
     try {
-        // Find user in the database by email or username
-        let userDoc;
-        if (validator.isEmail(loginId)) {
-            userDoc = await userModel.findOne({ email: loginId });
-        } else {
-            userDoc = await userModel.findOne({ username: loginId });
-        }
+        await loginDataValidator({ loginId, password });
+    } catch (error) {
+        return res.status(400).json({
+            status: 400,
+            message: error,
+        });
+    }
 
-        // Check if user exists
-        if (!userDoc) {
-            return res.status(400).json({
-                status: 400,
-                message: "User not found. Please check your email or username."
-            });
-        }
+    try {
+        // Find user in the database by email or username
+        const userDoc = await User.findByLoginId({ loginId });
 
         // Check if the password matches the hashed password stored in the database
         const isMatch = await bcrypt.compare(password, userDoc.password);
         if (!isMatch) {
             return res.status(400).json({
                 status: 400,
-                message: "Incorrect password. Please try again."
+                message: "Incorrect password. Please try with another.",
             });
         }
 
@@ -111,22 +85,13 @@ module.exports.login = async (req, res) => {
         return res.status(200).json({
             status: 200,
             message: "Login successful. Welcome back!",
-            data: {
-                userId: userDoc._id,
-                name: userDoc.name,
-                username: userDoc.username,
-                email: userDoc.email,
-            }
+            data: req.session.user,
         });
     } catch (error) {
         // Return an internal server error response
-        return res.status(500).json({
-            status: 500,
-            message: "Internal server error. Please try again later.",
-            error
-        });
+        return res.status(error.status).json(error);
     }
-}
+};
 
 // Controller function to logout
 module.exports.logout = async (req, res) => {
@@ -137,13 +102,13 @@ module.exports.logout = async (req, res) => {
             return res.status(500).json({
                 status: 500,
                 message: "Internal server error. Please try again later.",
-                error: error
+                error: error,
             });
         }
         // If session destruction is successful, return successful logout response
         return res.status(200).json({
             status: 200,
-            message: "Logout successful"
+            message: "Logout successful",
         });
     });
 };
@@ -154,13 +119,18 @@ module.exports.logoutAll = async (req, res) => {
     const username = req.session.user.username;
 
     // Define the session schema
-    const sessionSchema = new mongoose.Schema({ _id: String }, { strict: false });
+    const sessionSchema = new mongoose.Schema(
+        { _id: String },
+        { strict: false }
+    );
     // Create the session model
     const sessionModel = mongoose.model("session", sessionSchema);
 
     try {
         // Delete all sessions associated with the username
-        const deleteDocs = await sessionModel.deleteMany({ "session.user.username": username });
+        const deleteDocs = await sessionModel.deleteMany({
+            "session.user.username": username,
+        });
 
         // Return a success response with the deleted session documents
         return res.status(200).json({
@@ -172,8 +142,7 @@ module.exports.logoutAll = async (req, res) => {
         // Return a database error response if an error occurs
         return res.status(500).json({
             status: 500,
-            message: "Internal server error. Please try again later.",
-            error: error,
+            message: "Internal server error. Please try again later."
         });
     }
-}
+};

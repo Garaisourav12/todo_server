@@ -34,8 +34,8 @@ app.use(cors());
 
 // Routes
 app.use(homeRoute);
-app.use(userRoutes);
-app.use(todoRoutes);
+app.use('/user', userRoutes);
+app.use('/todo', todoRoutes);
 
 // Connect to database
 connectDb();
