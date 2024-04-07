@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt');
-const { cleanupAndValidate, loginDataValidator } = require("../utils/authUtils");
+const bcrypt = require("bcrypt");
+const {
+    cleanupAndValidate,
+    loginDataValidator,
+} = require("../utils/authUtils");
 const User = require("../entities/User");
 
 // Controller function to register
@@ -80,9 +83,9 @@ module.exports.login = async (req, res) => {
             username: userDoc.username,
             email: userDoc.email,
         };
-
+        // res.cookie("sid", req.session.sid, { http_only: true })
         // Return successful login response
-        return res.status(200).json({
+        return res.cookie("sid", req.session.sid, { http_only: true }).status(200).json({
             status: 200,
             message: "Login successful. Welcome back!",
             data: req.session.user,
@@ -102,7 +105,6 @@ module.exports.logout = async (req, res) => {
             return res.status(500).json({
                 status: 500,
                 message: "Internal server error. Please try again later.",
-                error: error,
             });
         }
         // If session destruction is successful, return successful logout response
@@ -142,7 +144,7 @@ module.exports.logoutAll = async (req, res) => {
         // Return a database error response if an error occurs
         return res.status(500).json({
             status: 500,
-            message: "Internal server error. Please try again later."
+            message: "Internal server error. Please try again later.",
         });
     }
 };

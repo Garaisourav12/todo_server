@@ -7,6 +7,7 @@ const clc = require("cli-color");
 const session = require("express-session");
 const mongoDbSession = require("connect-mongodb-session")(session);
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 // File Imports
 const connectDb = require("./database");
@@ -18,6 +19,11 @@ const store = new mongoDbSession({
     uri: process.env.MONGO_URI,
     collection: "sessions",
 });
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    methodes: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+}
 
 // Use middlewares
 app.use(express.json());
@@ -28,9 +34,15 @@ app.use(
         resave: false,
         saveUninitialized: false,
         store,
+        // cookie: {
+        //     maxAge: 1000 * 60 * 60 * 24,
+        //     secure: false,
+        //     httpOnly: true,
+        // }
     })
 );
-app.use(cors());
+app.use(cookieParser());
+app.use(cors(corsOptions));
 
 // Routes
 app.use(homeRoute);
